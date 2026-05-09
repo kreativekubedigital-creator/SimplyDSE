@@ -35,17 +35,19 @@ const Reveal = ({
       opacity: 0, 
       y: direction === "up" ? distance : direction === "down" ? -distance : 0,
       x: direction === "left" ? distance : direction === "right" ? -distance : 0,
-      filter: "blur(10px)"
+      scale: 0.98,
+      filter: "blur(12px)"
     },
     visible: { 
       opacity: 1, 
       y: 0, 
       x: 0,
+      scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 0.8,
+        duration: 1.2,
         delay: delay,
-        ease: "easeOut" as any 
+        ease: [0.23, 1, 0.32, 1] 
       }
     }
   };

@@ -1,5 +1,6 @@
 import { Shield, Zap, Globe, BarChart3 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Section from './ui/Section';
 import Heading from './ui/Heading';
 import Badge from './ui/Badge';
@@ -47,13 +48,17 @@ const features: Feature[] = [
 const FeatureCard = ({ feature }: { feature: Feature }) => {
   const Icon = feature.icon;
   return (
-    <div className="card-premium h-full p-8 md:p-10 group hover:-translate-y-1 transition-all duration-500 flex flex-col items-start">
+    <motion.div 
+      whileHover={{ y: -8, scale: 1.01 }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+      className="card-premium h-full p-8 md:p-10 group transition-all duration-500 flex flex-col items-start cursor-default"
+    >
       <div className={`w-14 h-14 rounded-2xl ${feature.color} flex-shrink-0 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
         <Icon className="w-7 h-7" />
       </div>
       <h3 className="text-2xl font-bold text-text-primary mb-4 tracking-tight">{feature.title}</h3>
       <p className="text-text-secondary leading-relaxed text-base flex-grow">{feature.description}</p>
-    </div>
+    </motion.div>
   );
 };
 

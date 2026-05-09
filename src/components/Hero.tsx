@@ -55,9 +55,9 @@ const Hero = () => {
                   opacity: 1, 
                   y: 0, 
                   transition: {
-                    duration: 1,
-                    delay: 0.4 + (index * 0.08),
-                    ease: [0.16, 1, 0.3, 1]
+                    duration: 1.2,
+                    delay: 0.2 + (index * 0.05),
+                    ease: [0.23, 1, 0.32, 1]
                   }
                 }}
                 className="text-[16vw] font-black text-transparent uppercase tracking-tighter leading-[0.8] inline-block will-change-transform"
@@ -86,12 +86,20 @@ const Hero = () => {
         {/* CTAs - Below the branding */}
         <Reveal delay={0.2} direction="up">
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button className="px-8 py-4 bg-brand-primary text-white rounded-full font-semibold hover:bg-brand-secondary transition-all flex items-center gap-2 group shadow-lg shadow-brand-primary/20">
+            <motion.button 
+              whileHover={{ y: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-4 bg-brand-primary text-white rounded-full font-semibold hover:bg-brand-secondary transition-all flex items-center gap-2 group shadow-lg shadow-brand-primary/20"
+            >
               Start Free Trial <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button className="px-8 py-4 bg-white/80 backdrop-blur-md text-text-primary border border-border-subtle rounded-full font-semibold hover:bg-white transition-all flex items-center gap-2 shadow-sm">
+            </motion.button>
+            <motion.button 
+              whileHover={{ y: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-4 bg-white/80 backdrop-blur-md text-text-primary border border-border-subtle rounded-full font-semibold hover:bg-white transition-all flex items-center gap-2 shadow-sm"
+            >
               Book a Demo <ChevronRight className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
         </Reveal>
       </div>
@@ -117,25 +125,37 @@ const Hero = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 px-4">
             {/* Compliance Card */}
-            <div className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group">
+            <motion.div 
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group"
+            >
               <p className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-widest mb-1 md:mb-2">Global Compliance</p>
               <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1 group-hover:text-brand-primary transition-colors">99.8%</h3>
               <p className="text-[10px] md:text-xs text-brand-primary font-medium">Verified uptime</p>
-            </div>
+            </motion.div>
 
             {/* Risk Card */}
-            <div className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group">
+            <motion.div 
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group"
+            >
               <p className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-widest mb-1 md:mb-2">Active Risk Monitoring</p>
               <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1 group-hover:text-brand-primary transition-colors">Real-time</h3>
               <p className="text-[10px] md:text-xs text-brand-primary font-medium">Automated alerts</p>
-            </div>
+            </motion.div>
 
             {/* Enterprise Card */}
-            <div className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group">
+            <motion.div 
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group"
+            >
               <p className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-widest mb-1 md:mb-2">Enterprise Ready</p>
               <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1 group-hover:text-brand-primary transition-colors">SOC2</h3>
               <p className="text-[10px] md:text-xs text-brand-primary font-medium">Certified security</p>
-            </div>
+            </motion.div>
           </div>
         </Reveal>
       </div>
