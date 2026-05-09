@@ -40,7 +40,7 @@ const features: Feature[] = [
     description: "Deep integrations with Workday, BambooHR, and Microsoft Teams.",
     icon: Zap,
     color: "bg-blue-50 text-brand-primary",
-    size: "col-span-1 md:col-span-2"
+    size: "col-span-1"
   }
 ];
 
@@ -105,7 +105,7 @@ const Features = () => {
           <FeatureCard feature={features[2]} />
         </Reveal>
 
-        <Reveal delay={0.5} className="col-span-1 md:col-span-2" direction="up" width="100%" hFull>
+        <Reveal delay={0.5} className="col-span-1" direction="up" width="100%" hFull>
           <FeatureCard feature={features[3]} />
         </Reveal>
       </div>
