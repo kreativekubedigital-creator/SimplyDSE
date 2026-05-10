@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Trust from './components/Trust';
-import Features from './components/Features';
+import FeaturesGrid from './components/FeaturesGrid';
 import Solutions from './components/Solutions';
 import Workflow from './components/Workflow';
 import DashboardPreview from './components/DashboardPreview';
 import Challenges from './components/Challenges';
 import Security from './components/Security';
 import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import HumanImpact from './components/HumanImpact';
@@ -40,25 +39,23 @@ function App() {
           {/* Section 2: Trust (White) */}
           <Trust />
 
-          {/* Section 3: Features (Light Gray) */}
-          <div className="bg-bg-light border-y border-border-subtle">
-            <Features />
-          </div>
+          {/* Section 3: New Features Grid (Black) */}
+          <FeaturesGrid />
+
+          {/* Section 4: Workflow (Dark) */}
+          <Workflow />
+
+          {/* Section 5: Challenges (White) */}
+          <Challenges />
 
           <Solutions />
 
           <HumanImpact />
 
-          {/* Section 4: Workflow (White) */}
-          <Workflow />
-
-          {/* Section 5: Dashboard Preview (Soft Gray/Blue Accent) */}
+          {/* Section 6: Dashboard Preview (Soft Gray/Blue Accent) */}
           <div className="bg-slate-50 border-y border-border-subtle">
             <DashboardPreview />
           </div>
-
-          {/* Section 6: Challenges (White) */}
-          <Challenges />
 
           {/* Section 7: Security (Light Gray) */}
           <div className="bg-bg-light border-y border-border-subtle">
@@ -67,11 +64,6 @@ function App() {
 
           {/* Section 8: Testimonials (White) */}
           <Testimonials />
-
-          {/* Section 9: FAQ (Light Gray) */}
-          <div className="bg-bg-light border-t border-border-subtle">
-            <FAQ />
-          </div>
 
           <CTA />
         </main>

@@ -1,75 +1,143 @@
-import { ClipboardCheck, UserPlus, FileSearch, CheckCircle2, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Zap, CheckCircle } from 'lucide-react';
 import Reveal from './ui/Reveal';
+
+const StepVisual = ({ type }: { type: string }) => {
+  if (type === 'grid') {
+    return (
+      <div className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0F172A]">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '20px 20px', transform: 'perspective(500px) rotateX(60deg) translateY(-50px)' }} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div 
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="w-32 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl flex items-center px-3 gap-2"
+          >
+            <div className="w-5 h-5 rounded bg-brand-primary/20" />
+            <div className="h-2 w-16 bg-white/20 rounded-full" />
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (type === 'radiant') {
+    return (
+      <div className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0F172A] flex items-center justify-center">
+        {[...Array(8)].map((_, i) => (
+          <div 
+            key={i} 
+            className="absolute w-full h-px bg-gradient-to-r from-transparent via-brand-primary/40 to-transparent" 
+            style={{ transform: `rotate(${i * 45}deg)` }} 
+          />
+        ))}
+        <div className="w-10 h-10 bg-white rotate-45 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+          <Zap className="w-5 h-5 text-brand-primary -rotate-45" />
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'nodes') {
+    return (
+      <div className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0F172A] p-6 flex flex-col justify-center gap-3">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded bg-white/5 border border-white/10 flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-white/20" />
+            </div>
+            <div className="flex-1 h-8 rounded bg-white/5 border border-white/10 relative overflow-hidden">
+              <motion.div 
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0F172A] flex items-center justify-center">
+      <div className="w-20 h-20 rounded-full border-2 border-dashed border-emerald-500/30 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+          <CheckCircle className="w-6 h-6 text-emerald-500" />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Workflow = () => {
   const steps = [
     {
-      icon: UserPlus,
-      title: "Seamless Onboarding",
-      description: "Sync your entire organization in minutes via HR integrations or bulk CSV. Assign owners automatically.",
-      step: "01"
+      step: "01",
+      title: "Set Up Your Organisation",
+      description: "Create your company profile and upload your staff securely. Assign roles and get your team ready in minutes.",
+      visual: "grid"
     },
     {
-      icon: ClipboardCheck,
-      title: "Distributed Assessments",
-      description: "Employees complete self-led, intelligent assessments. The system flags real-world risks instantly.",
-      step: "02"
+      step: "02",
+      title: "Send & Complete Assessments",
+      description: "Invite employees to complete DSE assessments via email, ensuring a guided, consistent experience that is simple and easy to follow.",
+      visual: "radiant"
     },
     {
-      icon: FileSearch,
-      title: "Automated Review",
-      description: "AI-powered scoring prioritizes high-risk cases for immediate clinical or management review.",
-      step: "03"
+      step: "03",
+      title: "Track Results & Take Action",
+      description: "Monitor completion rates, identify risk levels, and generate reports instantly to take action and improve workplace safety and compliance.",
+      visual: "nodes"
     },
     {
-      icon: CheckCircle2,
-      title: "Closed-Loop Resolution",
-      description: "Track interventions and verified resolutions. Audit-ready reports generated with one click.",
-      step: "04"
+      step: "04",
+      title: "Improve & Stay Compliant",
+      description: "Use assessment data and reports to implement improvements, reduce risks, support employee wellbeing, and maintain ongoing DSE compliance standards.",
+      visual: "check"
     }
   ];
 
   return (
-    <section id="workflow" className="bg-white">
+    <section id="workflow" className="bg-white pb-8 md:pb-12 pt-0">
       <div className="section-container">
-        <div className="mb-24 text-center max-w-3xl mx-auto">
+        <div className="mb-20">
           <Reveal delay={0.1}>
-            <span className="badge-enterprise">Operational Cycle</span>
+            <div className="text-brand-primary text-xs font-black uppercase tracking-[0.3em] mb-4">Operations</div>
           </Reveal>
           <Reveal delay={0.2}>
-            <h2 className="text-5xl md:text-6xl font-bold text-text-primary mt-6 tracking-tight leading-[1.05] text-balance">
-              How SimplyDSE drives <br className="hidden md:block" />
-              <span className="text-slate-300">measurable safety.</span>
+            <h2 className="text-5xl md:text-7xl font-bold text-text-primary tracking-tight leading-tight mb-8">
+              How It Works
             </h2>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <div className="max-w-2xl">
+              <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-4">
+                Built for Simplicity. Designed for Compliance.
+              </h3>
+              <p className="text-base md:text-lg text-text-secondary leading-relaxed font-medium">
+                Our mission is to remove the complexity from DSE assessments by providing a centralised platform that is easy to use, scalable, and built for real-world organisational needs.
+              </p>
+            </div>
           </Reveal>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {steps.map((step, i) => (
-            <Reveal key={i} delay={0.1} direction="up" width="100%">
-              <div className="flex flex-col md:flex-row gap-12 items-start group">
-                {/* Visual Step Indicator */}
-                <div className="flex-shrink-0">
-                  <div className="w-14 h-14 rounded-2xl bg-white border border-border-subtle shadow-sm flex items-center justify-center relative z-10 group-hover:border-brand-primary/20 transition-colors">
-                    <step.icon className="w-6 h-6 text-brand-primary" />
-                  </div>
+            <Reveal key={i} delay={i * 0.1} direction="up" width="100%" hFull>
+              <div className="group bg-[#111827] border border-[#1F2937] rounded-3xl p-8 h-full flex flex-col transition-all hover:border-brand-primary/30 shadow-xl">
+                <div className="h-40 mb-8 shrink-0">
+                  <StepVisual type={step.visual} />
                 </div>
-
-                {/* Content Side */}
+                
                 <div className="space-y-4">
-                  <div className="label-secondary">Phase {step.step}</div>
-                  <h3 className="text-3xl font-bold text-text-primary tracking-tight">
+                  <div className="text-[10px] font-black text-brand-primary uppercase tracking-[0.2em]">Step {step.step}</div>
+                  <h3 className="text-xl font-bold text-white leading-tight">
                     {step.title}
                   </h3>
-                  <p className="text-lg text-text-secondary leading-relaxed max-w-2xl font-medium">
+                  <p className="text-[15px] text-slate-400 leading-relaxed opacity-80">
                     {step.description}
                   </p>
-                  <div className="pt-4">
-                    <button className="text-[11px] font-bold text-text-muted uppercase tracking-widest hover:text-brand-primary transition-colors flex items-center gap-2 group">
-                      Technical Documentation
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
                 </div>
               </div>
             </Reveal>

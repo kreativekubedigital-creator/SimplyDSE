@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
 import Reveal from './ui/Reveal';
-import { Activity, Shield, Search, Bell, MoreHorizontal } from 'lucide-react';
+import { Activity, Shield } from 'lucide-react';
 
 const DashboardPreview = () => {
   return (

@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Reveal from './ui/Reveal';
 import getAssetPath from '../utils/wp-integration';
 
 const Trust = () => {
-  const logos = [
+  const allLogos = [
     { src: '/011%20(1).png', alt: 'AdvT' },
     { src: '/011%20(2).png', alt: 'Senedd Cymru Welsh Parliament' },
     { src: '/011%20(3).png', alt: 'Virtusa' },
@@ -15,27 +17,54 @@ const Trust = () => {
     { src: '/011%20(10).png', alt: 'SO Energy' },
   ];
 
+  const [index, setIndex] = useState(0);
+  const rows = [
+    allLogos.slice(0, 5),
+    allLogos.slice(5, 10)
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % rows.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [rows.length]);
+
   return (
     <section id="trust" className="bg-white border-b border-border-subtle overflow-hidden">
-      <div className="section-container !py-20">
-        <Reveal delay={0.1}>
-          <div className="label-secondary mb-16 text-center tracking-[0.2em]">
-            Trusted by Global Enterprise Leaders
+      <div className="section-container !py-16">
+        <Reveal delay={0.1} width="100%">
+          <div className="text-center mb-16">
+            <span className="label-secondary tracking-[0.3em] opacity-80">
+              Trusted by Global Enterprise Leaders
+            </span>
           </div>
         </Reveal>
 
-        <div className="relative">
-          <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-12 grayscale opacity-30">
-            {logos.map((logo, i) => (
-              <Reveal key={i} delay={0.1} direction="up">
-                <img 
-                  src={getAssetPath(logo.src)} 
-                  alt={logo.alt} 
-                  className="h-7 w-auto object-contain"
-                />
-              </Reveal>
-            ))}
-          </div>
+        <div className="relative h-20 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -50, opacity: 0 }}
+              transition={{ 
+                duration: 0.8, 
+                ease: [0.16, 1, 0.3, 1] 
+              }}
+              className="flex justify-center items-center w-full grayscale opacity-60 px-4 gap-12 md:gap-24"
+            >
+              {rows[index].map((logo, i) => (
+                <div key={i} className="flex-none flex justify-center">
+                  <img 
+                    src={getAssetPath(logo.src)} 
+                    alt={logo.alt} 
+                    className="h-10 md:h-12 w-auto object-contain hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
