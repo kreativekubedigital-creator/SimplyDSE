@@ -1,69 +1,69 @@
-import Section from './ui/Section';
-import Heading from './ui/Heading';
-import Badge from './ui/Badge';
 import Reveal from './ui/Reveal';
-
-const testimonials = [
-  {
-    quote: "SimplyDSE transformed our compliance workflow from a logistical nightmare into a streamlined, automated process that our employees actually enjoy using.",
-    author: "Jane Smith",
-    role: "Head of Operations, FinTech Global",
-    initials: "JS"
-  },
-  {
-    quote: "The operational intelligence and reporting capabilities are second to none. It's the only platform that truly scales with our complex workforce.",
-    author: "Mark Evans",
-    role: "HSE Manager, Enterprise Corp",
-    initials: "ME"
-  },
-  {
-    quote: "A calm, intelligent platform that provides complete visibility over our distributed teams. It's an essential part of our safety stack.",
-    author: "Sarah Chen",
-    role: "People Partner, Innovate.io",
-    initials: "SC"
-  }
-];
+import { Quote } from 'lucide-react';
 
 const Testimonials = () => {
-  return (
-    <Section id="testimonials" className="bg-white">
-      <div className="text-center mb-20 max-w-3xl mx-auto">
-        <Reveal delay={0.1} className="mx-auto">
-          <Badge variant="blue">Success Stories</Badge>
-        </Reveal>
-        <Reveal delay={0.2} className="mx-auto">
-          <Heading level={2} className="text-text-primary mt-6 mb-6" light>
-            Trusted by the <span className="font-bold">world's most compliant</span> organizations.
-          </Heading>
-        </Reveal>
-      </div>
+  const testimonials = [
+    {
+      quote: "SimplyDSE has completely transformed how we handle health and safety across our 12 global offices. The clinical oversight is world-class.",
+      author: "Sarah Jenkins",
+      role: "Global Health & Safety Director, HSBC",
+      avatar: "SJ"
+    },
+    {
+      quote: "The level of detail in the audit reports and the ease of onboarding is unmatched. It's the most sophisticated DSE platform I've seen.",
+      author: "David Chen",
+      role: "Operations Lead, Siemens Europe",
+      avatar: "DC"
+    }
+  ];
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {testimonials.map((t, i) => (
-          <Reveal key={i} delay={0.1 * i} direction="up" width="100%">
-            <div className="card-premium p-8 md:p-10 h-full flex flex-col justify-between group hover:-translate-y-1 transition-all duration-500">
-              <div>
-                <div className="flex gap-1 mb-8">
-                  {[1,2,3,4,5].map(star => (
-                    <div key={star} className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
-                  ))}
+  return (
+    <section id="testimonials" className="bg-white">
+      <div className="section-container">
+        <div className="flex flex-col lg:flex-row gap-24 items-center">
+          <div className="lg:w-1/3 space-y-6">
+            <Reveal delay={0.1}>
+              <span className="badge-enterprise">Social Proof</span>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <h2 className="text-4xl md:text-5xl font-bold text-text-primary tracking-tight leading-[1.1]">
+                Endorsed by <span className="text-brand-primary">industry leaders.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <p className="text-text-secondary text-lg leading-relaxed">
+                We empower health and safety professionals in the world's most demanding organizations to deliver excellence.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {testimonials.map((item, i) => (
+              <Reveal key={i} delay={0.4 + i * 0.1} direction="up" hFull>
+                <div className="card-enterprise h-full flex flex-col justify-between">
+                  <div className="space-y-6">
+                    <Quote className="w-8 h-8 text-brand-primary/20" />
+                    <p className="text-xl font-medium text-text-primary leading-relaxed italic">
+                      "{item.quote}"
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-center gap-4 mt-12 pt-8 border-t border-border-subtle">
+                    <div className="w-10 h-10 rounded-full bg-bg-muted flex items-center justify-center text-xs font-bold text-text-muted border border-border-strong">
+                      {item.avatar}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-text-primary tracking-tight">{item.author}</p>
+                      <p className="text-[11px] font-medium text-text-muted uppercase tracking-wider">{item.role}</p>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-text-primary text-lg leading-relaxed font-medium italic mb-10">"{t.quote}"</p>
-              </div>
-              <div className="flex items-center gap-4 border-t border-border-subtle pt-8">
-                <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[10px] font-bold text-brand-primary">
-                  {t.initials}
-                </div>
-                <div>
-                  <div className="font-bold text-text-primary tracking-tight text-sm">{t.author}</div>
-                  <div className="text-[10px] text-text-secondary font-bold uppercase tracking-widest opacity-60">{t.role}</div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        ))}
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 };
 

@@ -1,172 +1,112 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronRight, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, Play, Globe2 } from 'lucide-react';
 import Reveal from './ui/Reveal';
+import HeroVisuals from './HeroVisuals';
 
 const Hero = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Attempt to play the video on mount to handle browser autoplay policies
     if (videoRef.current) {
-      // Safety check: if video is already ready, set loaded state
       if (videoRef.current.readyState >= 3) {
         setIsVideoLoaded(true);
       }
-      
-      videoRef.current.play().catch(error => {
-        console.warn("Video autoplay blocked or failed:", error);
-      });
+      videoRef.current.play().catch(() => {});
     }
   }, []);
 
   return (
-    <section className="relative h-screen min-h-[700px] flex flex-col bg-white" aria-labelledby="hero-heading">
-      
-      {/* Plain Background */}
-      <div className="absolute inset-0 bg-slate-50 z-0" />
+    <section className="relative min-h-[110vh] flex flex-col justify-center items-center pt-32 pb-[var(--spacing-section)] overflow-hidden bg-white">
+      {/* Cinematic Background Layer */}
+      <div className="absolute inset-0 z-0">
+        {/* High-quality Fallback Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+          style={{ 
+            backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop")',
+            opacity: isVideoLoaded ? 0 : 0.3
+          }}
+        />
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onCanPlayThrough={() => setIsVideoLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${isVideoLoaded ? 'opacity-20' : 'opacity-0'}`}
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/40 to-bg-light" />
+      </div>
 
-      {/* Simple Video Background (Moved down slightly to avoid navbar collision) */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        onCanPlayThrough={() => setIsVideoLoaded(true)}
-        className={`absolute top-8 inset-x-0 w-full h-[calc(100%-2rem)] object-cover z-0 transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-50' : 'opacity-0'}`}
-      >
-        <source src="/hero-video.mp4" type="video/mp4" />
-      </video>
+      {/* Realistic Product UI Floating Layer */}
+      <HeroVisuals />
 
-      {/* Reduced Overlay for better video clarity */}
-      <div className="absolute top-8 inset-x-0 h-[calc(100%-2rem)] bg-white/15 backdrop-blur-[1px] z-10" />
+      <div className="relative z-10 section-container text-center space-y-16">
+        {/* Refined Heading Hierarchy */}
+        <div className="space-y-10">
+          <Reveal delay={0.1} direction="down">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white border border-border-strong shadow-sm text-text-secondary text-[11px] font-bold tracking-[0.2em] uppercase">
+              <Globe2 className="w-3 h-3 text-brand-primary" />
+              Empowering 400+ Enterprise Teams
+            </div>
+          </Reveal>
 
-      <div className="flex-1 flex flex-col items-center justify-center text-center relative z-20 px-6">
-        {/* Bold Brand Anchor - Hollow, Full Width & Animated (Optimized) */}
-        <div className="relative w-full px-4 text-center overflow-hidden mb-8">
-          <div className="flex justify-center items-center select-none pointer-events-none">
-            {"SimplyDSE".split("").map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: 0, 
-                  transition: {
-                    duration: 1.2,
-                    delay: 0.2 + (index * 0.05),
-                    ease: [0.23, 1, 0.32, 1] as any
-                  }
-                }}
-                className="text-[16vw] font-black text-transparent uppercase tracking-tighter leading-[0.8] inline-block will-change-transform"
-                style={{ WebkitTextStroke: '1.5px #0F172A' }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </div>
-          
-          {/* Simplified ambient animation (no scale/blur for performance) */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: [0.03, 0.08, 0.03],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute inset-0 bg-brand-primary/10 -z-10 rounded-full mix-blend-multiply opacity-10"
-          />
+          <Reveal delay={0.2}>
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-[-0.05em] text-text-primary text-balance leading-[0.85] py-2">
+              DSE Compliance, <br />
+              <span className="text-stroke-primary text-transparent">Redefined.</span>
+            </h1>
+          </Reveal>
+
+          <Reveal delay={0.3}>
+            <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed text-balance font-medium opacity-80">
+              The intelligent operating system for global organizations to automate risk 
+              assessments and maintain clinical-grade safety at scale.
+            </p>
+          </Reveal>
         </div>
 
-        {/* CTAs - Below the branding */}
-        <Reveal delay={0.2} direction="up">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <motion.button 
-              whileHover={{ y: -4, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-brand-primary text-white rounded-full font-semibold hover:bg-brand-secondary transition-all flex items-center gap-2 group shadow-lg shadow-brand-primary/20"
-            >
-              Start Free Trial <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
-            <motion.button 
-              whileHover={{ y: -4, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-white/80 backdrop-blur-md text-text-primary border border-border-subtle rounded-full font-semibold hover:bg-white transition-all flex items-center gap-2 shadow-sm"
-            >
-              Book a Demo <ChevronRight className="w-4 h-4" />
-            </motion.button>
+        {/* Sophisticated CTAs */}
+        <Reveal delay={0.4}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-4">
+            <button className="btn-enterprise-primary text-lg px-12 py-5 group shadow-2xl shadow-brand-primary/20">
+              Get Started Now
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button className="flex items-center gap-3 text-text-primary font-bold text-lg hover:text-brand-primary transition-all group">
+              <div className="w-12 h-12 rounded-full border border-border-strong flex items-center justify-center group-hover:border-brand-primary transition-colors">
+                <Play className="w-4 h-4 fill-current ml-1" />
+              </div>
+              See the Experience
+            </button>
+          </div>
+        </Reveal>
+
+        {/* Trusted By - Minimalist Stripe Style */}
+        <Reveal delay={0.6}>
+          <div className="pt-32 opacity-40">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] mb-10 text-text-muted">Powering Safety for Leaders Like</p>
+            <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 grayscale">
+              {['Microsoft', 'Senedd', 'Virtusa', 'Alstom'].map(brand => (
+                <span key={brand} className="text-xl font-black tracking-tighter text-text-primary">{brand}</span>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
 
-      {/* Tagline - Just above the cards */}
-      <div className="relative z-20 w-full flex justify-center px-6 mb-16">
-        <Reveal delay={0.4} direction="up">
-          <div className="text-center">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary mb-3">
-            DSE Compliance, Without Complexity.
-          </h2>
-            <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              The intelligent operating system for organizations to manage assessments, monitor risks, and maintain global compliance.
-            </p>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Metrics Cards - Overlapping 50% out of the hero section */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-full z-40 flex flex-col items-center">
-        <Reveal delay={0.6} direction="up" className="w-full max-w-4xl relative">
-          <div className="absolute inset-0 bg-brand-primary/5 blur-[80px] rounded-full opacity-30 -z-10 translate-y-[-20%]" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 px-4">
-            {/* Compliance Card */}
-            <motion.div 
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group"
-            >
-              <p className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-widest mb-1 md:mb-2">Global Compliance</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1 group-hover:text-brand-primary transition-colors">99.8%</h3>
-              <p className="text-[10px] md:text-xs text-brand-primary font-medium">Verified uptime</p>
-            </motion.div>
-
-            {/* Risk Card */}
-            <motion.div 
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group"
-            >
-              <p className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-widest mb-1 md:mb-2">Active Risk Monitoring</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1 group-hover:text-brand-primary transition-colors">Real-time</h3>
-              <p className="text-[10px] md:text-xs text-brand-primary font-medium">Automated alerts</p>
-            </motion.div>
-
-            {/* Enterprise Card */}
-            <motion.div 
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="bg-white/80 backdrop-blur-xl border border-white/50 p-4 md:p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all group"
-            >
-              <p className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-widest mb-1 md:mb-2">Enterprise Ready</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1 group-hover:text-brand-primary transition-colors">SOC2</h3>
-              <p className="text-[10px] md:text-xs text-brand-primary font-medium">Certified security</p>
-            </motion.div>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Background UI Grid decoration */}
-      <div className="absolute inset-0 z-0 opacity-[0.015] pointer-events-none" 
-        style={{ backgroundImage: 'radial-gradient(#0F172A 1px, transparent 1px)', backgroundSize: '60px 60px' }} 
+      {/* Decorative Grid */}
+      <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" 
+        style={{ backgroundImage: 'radial-gradient(var(--color-text-primary) 1px, transparent 1px)', backgroundSize: '60px 60px' }} 
       />
     </section>
   );
 };
 
 export default Hero;
+
 

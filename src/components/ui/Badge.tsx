@@ -2,19 +2,20 @@ import React from 'react';
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'blue' | 'gray' | 'outline';
+  variant?: 'primary' | 'success' | 'warning' | 'neutral';
   className?: string;
 }
 
-const Badge = ({ children, variant = 'blue', className = '' }: BadgeProps) => {
+const Badge = ({ children, variant = 'primary', className = '' }: BadgeProps) => {
   const variants = {
-    blue: 'bg-blue-50 text-brand-primary border-blue-100',
-    gray: 'bg-slate-50 text-text-secondary border-border-subtle',
-    outline: 'bg-transparent text-text-secondary border-border-subtle',
+    primary: 'bg-brand-light text-brand-primary border-brand-primary/10',
+    success: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+    warning: 'bg-amber-50 text-amber-600 border-amber-100',
+    neutral: 'bg-slate-50 text-text-muted border-border-subtle',
   };
 
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] border ${variants[variant]} ${className}`}>
+    <span className={`badge-enterprise ${variants[variant]} ${className}`}>
       {children}
     </span>
   );

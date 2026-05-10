@@ -6,8 +6,12 @@
 // If window.simplydse_config is defined (via wp_localize_script), use that path.
 // Otherwise, default to the root for local development.
 const getAssetPath = (path: string) => {
+  if (path.startsWith('http') || path.startsWith('https') || path.startsWith('data:')) {
+    return path;
+  }
   const base = (window as any).simplydse_config?.asset_url || '';
-  return `${base}${path.startsWith('/') ? path : '/' + path}`;
+  const cleanPath = path.startsWith('/') ? path : '/' + path;
+  return `${base}${cleanPath}`;
 };
 
 export default getAssetPath;

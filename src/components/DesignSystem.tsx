@@ -1,82 +1,182 @@
+import { useState } from 'react';
 import Section from './ui/Section';
 import Heading from './ui/Heading';
 import Button from './ui/Button';
 import Card from './ui/Card';
 import Badge from './ui/Badge';
-import { Shield, Zap, BarChart3 } from 'lucide-react';
+import Input from './ui/Input';
+import Table, { TableRow, TableCell } from './ui/Table';
+import Tabs from './ui/Tabs';
+import Alert from './ui/Alert';
+import Reveal from './ui/Reveal';
+import { Shield, Zap, BarChart3, Search, Mail, ArrowRight } from 'lucide-react';
 
 const DesignSystem = () => {
+  const [activeTab, setActiveTab] = useState('components');
+
+  const tabs = [
+    { id: 'components', label: 'Core Components' },
+    { id: 'data', label: 'Data Display' },
+    { id: 'forms', label: 'Forms & Inputs' },
+    { id: 'feedback', label: 'Feedback' },
+  ];
+
   return (
-    <div className="pt-20">
+    <div className="pt-24 bg-white min-h-screen">
       <Section>
-        <Badge variant="blue">System v1.0</Badge>
-        <Heading level={1} gradient className="mt-8 mb-4">Design System</Heading>
-        <p className="text-zinc-400 max-w-2xl text-lg">
-          A standardized library of premium UI components built for SimplyDSE, 
-          following the principles of minimalist enterprise software.
-        </p>
+        <Reveal delay={0.1}>
+          <Badge variant="primary">Design System v2.0</Badge>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <Heading level={1} className="mt-8 mb-6 text-7xl font-bold tracking-tight">System <span className="text-brand-primary">Architecture.</span></Heading>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <p className="text-text-secondary max-w-2xl text-xl font-medium leading-relaxed opacity-80">
+            A high-fidelity library of operational UI components engineered for the SimplyDSE platform.
+            Built on a foundation of calm intelligence and enterprise-grade scalability.
+          </p>
+        </Reveal>
+
+        <div className="mt-16">
+          <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
+        </div>
       </Section>
 
-      <Section className="border-t border-white/5">
-        <Heading level={2} className="mb-12">Typography</Heading>
-        <div className="space-y-12">
-          <div>
-            <Badge className="mb-4">Heading Level 1</Badge>
-            <Heading level={1}>The future of compliance.</Heading>
+      {activeTab === 'components' && (
+        <>
+          <Section className="pt-20">
+            <div className="mb-12">
+              <h3 className="text-sm font-bold text-text-muted uppercase tracking-[0.2em] mb-4">Actions</h3>
+              <Heading level={2}>Buttons & Interactivity</Heading>
+            </div>
+            <div className="flex flex-wrap gap-6 items-center">
+              <Button variant="primary">Primary Action</Button>
+              <Button variant="secondary">Secondary Action</Button>
+              <Button variant="outline">Outline Style</Button>
+              <Button variant="ghost">Ghost Style</Button>
+              <Button variant="primary" size="lg">Large</Button>
+              <Button variant="primary" size="sm">Small</Button>
+              <Button variant="primary">
+                Icon Support <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </Section>
+
+          <Section className="pt-20">
+            <div className="mb-12">
+              <h3 className="text-sm font-bold text-text-muted uppercase tracking-[0.2em] mb-4">Surface</h3>
+              <Heading level={2}>Enterprise Cards</Heading>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="card-enterprise">
+                <div className="w-12 h-12 rounded-xl bg-brand-light flex items-center justify-center mb-6">
+                  <Zap className="w-6 h-6 text-brand-primary" />
+                </div>
+                <h4 className="text-xl font-bold mb-3 tracking-tight">Standard Card</h4>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  The default container for information modules across the dashboard.
+                </p>
+              </Card>
+              <Card className="card-enterprise-dark">
+                <div className="w-12 h-12 rounded-xl bg-brand-primary flex items-center justify-center mb-6 text-white">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <h4 className="text-xl font-bold mb-3 tracking-tight text-white">Dark Variant</h4>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Used for high-priority features or distinct platform sections.
+                </p>
+              </Card>
+              <div className="card-enterprise bg-slate-50 border-0">
+                <div className="w-12 h-12 rounded-xl bg-white border border-border-subtle flex items-center justify-center mb-6">
+                  <BarChart3 className="w-6 h-6 text-emerald-600" />
+                </div>
+                <h4 className="text-xl font-bold mb-3 tracking-tight">Muted Card</h4>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  Lower contrast surface for secondary data or background content.
+                </p>
+              </div>
+            </div>
+          </Section>
+        </>
+      )}
+
+      {activeTab === 'data' && (
+        <Section className="pt-20">
+          <div className="mb-12">
+            <h3 className="text-sm font-bold text-text-muted uppercase tracking-[0.2em] mb-4">Data Visualization</h3>
+            <Heading level={2}>Tables & Lists</Heading>
           </div>
-          <div>
-            <Badge className="mb-4">Heading Level 2</Badge>
-            <Heading level={2}>Automate your workforce safety.</Heading>
+          <Table headers={['User', 'Location', 'Status', 'Risk Score', '']}>
+            {[
+              { name: 'Sarah Jenkins', loc: 'London, UK', status: 'Optimal', score: '98.4%', variant: 'success' },
+              { name: 'Marcus Miller', loc: 'Berlin, DE', status: 'Warning', score: '72.1%', variant: 'warning' },
+              { name: 'Elena Rodriguez', loc: 'Madrid, ES', status: 'Optimal', score: '94.2%', variant: 'success' },
+            ].map((row, i) => (
+              <TableRow key={i}>
+                <TableCell className="font-bold">{row.name}</TableCell>
+                <TableCell className="text-text-muted">{row.loc}</TableCell>
+                <TableCell>
+                  <Badge variant={row.variant as any}>{row.status}</Badge>
+                </TableCell>
+                <TableCell className="font-mono">{row.score}</TableCell>
+                <TableCell className="text-right">
+                  <Button variant="ghost" size="sm">Details</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </Table>
+        </Section>
+      )}
+
+      {activeTab === 'forms' && (
+        <Section className="pt-20">
+          <div className="mb-12">
+            <h3 className="text-sm font-bold text-text-muted uppercase tracking-[0.2em] mb-4">Inputs</h3>
+            <Heading level={2}>Form Controls</Heading>
           </div>
-          <div>
-            <Badge className="mb-4">Gradient Heading</Badge>
-            <Heading level={2} gradient>Cinematic enterprise experience.</Heading>
+          <div className="max-w-2xl space-y-8">
+            <div className="grid grid-cols-2 gap-6">
+              <Input label="First Name" placeholder="Jane" />
+              <Input label="Last Name" placeholder="Doe" />
+            </div>
+            <Input label="Email Address" type="email" placeholder="jane@enterprise.com" icon={Mail} />
+            <Input label="Organization ID" value="SD-942-X" error="Verification pending for this ID" />
+            
+            <div className="p-8 bg-slate-50 rounded-2xl border border-border-subtle space-y-6">
+              <h4 className="text-sm font-bold uppercase tracking-widest text-text-muted">Quick Search</h4>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                <input 
+                  type="text" 
+                  className="w-full bg-white border border-border-strong rounded-full px-12 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-brand-primary/5 transition-all"
+                  placeholder="Search analytics, users, or reports..."
+                />
+                <kbd className="absolute right-4 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded border border-border-subtle bg-slate-50 text-[10px] font-bold text-text-muted">⌘K</kbd>
+              </div>
+            </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      )}
 
-      <Section className="border-t border-white/5">
-        <Heading level={2} className="mb-12">Buttons</Heading>
-        <div className="flex flex-wrap gap-6 items-center">
-          <Button variant="primary">Primary Action</Button>
-          <Button variant="secondary">Secondary Action</Button>
-          <Button variant="glass">Glass Action</Button>
-          <Button variant="ghost">Ghost Action</Button>
-          <Button variant="primary" size="lg">Large Button</Button>
-          <Button variant="primary" size="sm">Small Button</Button>
-        </div>
-      </Section>
-
-      <Section className="border-t border-white/5">
-        <Heading level={2} className="mb-12">Cards & Layout</Heading>
-        <div className="grid md:grid-cols-3 gap-8">
-          <Card>
-            <Zap className="text-blue-500 w-10 h-10 mb-6" />
-            <Heading level={4} className="mb-4">Real-time Insights</Heading>
-            <p className="text-zinc-400 text-sm">Monitor compliance levels across your global workforce with live updates.</p>
-          </Card>
-          <Card className="bg-blue-600/5 border-blue-600/20">
-            <BarChart3 className="text-blue-500 w-10 h-10 mb-6" />
-            <Heading level={4} className="mb-4">Advanced Analytics</Heading>
-            <p className="text-zinc-400 text-sm">Predictive risk modeling to identify ergonomic issues before they occur.</p>
-          </Card>
-          <Card>
-            <Shield className="text-blue-500 w-10 h-10 mb-6" />
-            <Heading level={4} className="mb-4">Enterprise Grade</Heading>
-            <p className="text-zinc-400 text-sm">SAML SSO, RBAC, and data isolation built into the core infrastructure.</p>
-          </Card>
-        </div>
-      </Section>
-
-      <Section className="border-t border-white/5 pb-40">
-        <Heading level={2} className="mb-12">Badges</Heading>
-        <div className="flex gap-4">
-          <Badge variant="blue">Operational</Badge>
-          <Badge variant="gray">Default</Badge>
-          <Badge variant="blue">SOC2 Type II</Badge>
-          <Badge variant="gray">v1.2.4</Badge>
-        </div>
-      </Section>
+      {activeTab === 'feedback' && (
+        <Section className="pt-20 pb-40">
+          <div className="mb-12">
+            <h3 className="text-sm font-bold text-text-muted uppercase tracking-[0.2em] mb-4">Communication</h3>
+            <Heading level={2}>Alerts & Status</Heading>
+          </div>
+          <div className="grid gap-6 max-w-3xl">
+            <Alert type="info" title="System Maintenance">
+              Global assessment services will be offline for 15 minutes at 02:00 UTC for a scheduled intelligence update.
+            </Alert>
+            <Alert type="success" title="Verification Successful">
+              All 1,240 workstations have been successfully synchronized with the SOC2 compliance layer.
+            </Alert>
+            <Alert type="warning" title="High Risk Detected">
+              Automatic escalations have been triggered for 4 users in the North American region due to persistent ergonomic violations.
+            </Alert>
+          </div>
+        </Section>
+      )}
     </div>
   );
 };

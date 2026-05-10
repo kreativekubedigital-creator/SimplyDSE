@@ -16,12 +16,12 @@ const Reveal = ({
   width = "fit-content", 
   delay = 0, 
   direction = "up", 
-  distance = 20,
+  distance = 15,
   className = "",
   hFull = false
 }: RevealProps) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  const isInView = useInView(ref, { once: true, margin: "100px" });
   const mainControls = useAnimation();
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const Reveal = ({
       opacity: 0, 
       y: direction === "up" ? distance : direction === "down" ? -distance : 0,
       x: direction === "left" ? distance : direction === "right" ? -distance : 0,
-      scale: 0.98,
-      filter: "blur(12px)"
+      scale: 0.99,
+      filter: "blur(4px)"
     },
     visible: { 
       opacity: 1, 
@@ -45,7 +45,7 @@ const Reveal = ({
       scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 1.2,
+        duration: 0.9,
         delay: delay,
         ease: [0.23, 1, 0.32, 1] as any
       }

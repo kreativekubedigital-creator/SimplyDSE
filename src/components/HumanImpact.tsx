@@ -1,0 +1,62 @@
+import Reveal from './ui/Reveal';
+import getAssetPath from '../utils/wp-integration';
+
+const HumanImpact = () => {
+  const images = [
+    {
+      src: getAssetPath('/collaboration.png'),
+      title: "Collaborative Safety",
+      desc: "Teams working together to ensure a safer workplace environment."
+    },
+    {
+      src: getAssetPath('/operational_excellence.png'),
+      title: "Precision Execution",
+      desc: "Methodical approach to compliance that leaves no room for error."
+    },
+    {
+      src: getAssetPath('/support.png'),
+      title: "Expert Support",
+      desc: "Clinical ergonomic experts available whenever your team needs them."
+    }
+  ];
+
+  return (
+    <section className="bg-white">
+      <div className="section-container">
+        <div className="mb-20 text-center max-w-3xl mx-auto">
+          <Reveal delay={0.1}>
+            <span className="badge-enterprise">The Human Element</span>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <h2 className="text-5xl md:text-6xl font-bold text-text-primary mt-6 tracking-tight leading-[1.05]">
+              Technology that <br className="hidden md:block" />
+              <span className="text-brand-primary">empowers people.</span>
+            </h2>
+          </Reveal>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {images.map((img, i) => (
+            <Reveal key={i} delay={0.2 + i * 0.1} direction="up" hFull>
+              <div className="group relative rounded-[2rem] overflow-hidden border border-border-subtle aspect-[3/4] bg-bg-muted">
+                <img 
+                  src={img.src} 
+                  alt={img.title}
+                  className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2000ms]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
+                <div className="absolute bottom-8 left-8 right-8 text-white">
+                  <h3 className="text-xl font-bold mb-2 tracking-tight">{img.title}</h3>
+                  <p className="text-sm text-white/80 leading-relaxed">{img.desc}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HumanImpact;

@@ -14,105 +14,99 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact', href: '#contact' },
-    { name: 'Blog', href: '#blog' },
+    { name: 'Features', href: '#features' },
+    { name: 'Solutions', href: '#solutions' },
+    { name: 'Security', href: '#security' },
+    { name: 'Resources', href: '#faq' },
   ];
 
   return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6 py-6 pointer-events-none"
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${
+        isScrolled ? 'top-2' : 'top-0'
+      }`}
     >
-      <nav className={`
-        w-full max-w-7xl flex items-center justify-between px-6 py-2.5 rounded-full border transition-all duration-500 pointer-events-auto
-        ${isScrolled 
-          ? 'bg-white/80 backdrop-blur-xl border-border-subtle shadow-[0_8px_32px_-8px_rgba(15,23,42,0.08)]' 
-          : 'bg-white/40 backdrop-blur-md border-transparent shadow-none'}
-      `}>
-        <a href="/" className="flex items-center gap-3">
-          <img 
-            src={getAssetPath('/simplydselogo.webp')} 
-            alt="SimplyDSE Logo" 
-            className="w-8 h-8 object-contain"
-          />
-          <span className="text-text-primary font-bold text-xl tracking-tighter">SimplyDSE</span>
-        </a>
-        
-        <div className="flex items-center gap-8">
-          <ul className="hidden md:flex items-center gap-8">
+      <div 
+        className={`max-w-7xl mx-auto transition-all duration-500 ${
+          isScrolled 
+            ? 'bg-white/80 backdrop-blur-xl border border-border-strong/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] rounded-full py-3 px-8' 
+            : 'bg-transparent py-4 px-4'
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <img 
+              src={getAssetPath('/simplydselogo.webp')} 
+              alt="SimplyDSE Logo" 
+              className="w-8 h-8 transition-transform duration-500 group-hover:rotate-[15deg]"
+            />
+            <span className="text-xl font-bold text-text-primary tracking-tighter">SimplyDSE</span>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
-              <li key={link.name}>
-                <a 
-                  href={link.href} 
-                  className="text-[11px] font-bold uppercase tracking-[0.15em] text-text-secondary hover:text-brand-primary transition-colors"
-                >
-                  {link.name}
-                </a>
-              </li>
+              <a 
+                key={link.name}
+                href={link.href}
+                className="text-[13px] font-bold text-text-secondary hover:text-brand-primary transition-colors tracking-tight"
+              >
+                {link.name}
+              </a>
             ))}
-          </ul>
+          </div>
+
+          {/* Actions */}
+          <div className="hidden md:flex items-center gap-6">
+            <button className="text-[13px] font-bold text-text-secondary hover:text-text-primary transition-colors">
+              Log in
+            </button>
+            <button className="btn-enterprise-primary py-2.5 px-6 text-[13px]">
+              Book Demo
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Mobile Toggle */}
           <button 
-            className="text-[11px] font-bold uppercase tracking-[0.15em] text-text-primary hover:text-brand-primary transition-colors hidden sm:block px-4"
+            className="md:hidden text-text-primary"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            Login
-          </button>
-          <button 
-            className="bg-brand-primary text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-brand-primary/90 transition-all shadow-lg shadow-brand-primary/10 flex items-center gap-2 group"
-            aria-label="Get Started"
-          >
-            Get Started
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button 
-            className="md:hidden text-text-primary p-2" 
-            onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
+            {isMobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
-      </nav>
+      </div>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            className="fixed inset-0 z-[100] bg-white p-8 pointer-events-auto"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-24 left-6 right-6 bg-white border border-border-strong rounded-3xl p-8 shadow-2xl md:hidden"
           >
-            <div className="flex justify-between items-center mb-12">
-              <a href="/" className="flex items-center gap-3">
-                <img src={getAssetPath('/simplydselogo.webp')} alt="Logo" className="w-8 h-8" />
-                <span className="text-xl font-bold tracking-tighter">SimplyDSE</span>
-              </a>
-              <button onClick={() => setIsMobileMenuOpen(false)}><X className="w-8 h-8" /></button>
-            </div>
-            
-            <div className="space-y-8">
+            <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
                 <a 
                   key={link.name}
                   href={link.href}
+                  className="text-lg font-bold text-text-primary"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block text-4xl font-light tracking-tight text-text-primary hover:text-brand-primary transition-colors"
                 >
                   {link.name}
                 </a>
               ))}
-            </div>
-
-            <div className="absolute bottom-12 left-8 right-8 space-y-4">
-              <button className="w-full py-4 rounded-2xl border border-border-subtle font-bold text-text-primary">Login</button>
-              <button className="w-full py-4 rounded-2xl bg-brand-primary text-white font-bold">Get Started</button>
+              <hr className="border-border-subtle" />
+              <button className="w-full btn-enterprise-primary py-4">
+                Book Demo
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </nav>
   );
 };
 

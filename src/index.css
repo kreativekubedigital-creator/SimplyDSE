@@ -1,75 +1,146 @@
 @import "tailwindcss";
 
 @theme {
-  /* Primary Background: #F7F8FA */
-  --color-bg-light: #F7F8FA;
-  /* Surface / Cards: #FFFFFF */
+  /* Sophisticated Enterprise Palette */
+  --color-bg-light: #FBFBFC;
   --color-bg-surface: #FFFFFF;
-  /* Primary Text: #0F172A */
-  --color-text-primary: #0F172A;
-  /* Secondary Text: #475569 */
-  --color-text-secondary: #475569;
-  /* Borders: #E2E8F0 */
-  --color-border-subtle: #E2E8F0;
-  /* Primary Accent: #2563EB */
-  --color-brand-primary: #2563EB;
-  /* Secondary Accent: #60A5FA */
-  --color-brand-secondary: #60A5FA;
+  --color-bg-muted: #F8FAFC;
   
-  --color-success: #16A34A;
-  --color-warning: #F59E0B;
+  --color-text-primary: #020617;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  
+  --color-border-subtle: #F1F5F9;
+  --color-border-strong: #E2E8F0;
+  
+  /* Muted Premium Blue */
+  --color-brand-primary: #1E40AF;
+  --color-brand-secondary: #3B82F6;
+  --color-brand-light: #EFF6FF;
+  
+  --color-success: #059669;
+  --color-warning: #D97706;
   --color-danger: #DC2626;
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 
+  /* Refined Radius System */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
   --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
-  --radius-4xl: 2.5rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+  
+  /* Cinematic Spacing Tokens */
+  --spacing-section: 240px;
+  --spacing-section-mobile: 120px;
+  --spacing-hero-offset: 160px;
 }
 
 @layer base {
   body {
-    @apply bg-bg-light text-text-primary font-sans antialiased;
+    @apply bg-bg-light text-text-primary font-sans antialiased selection:bg-brand-primary/10 selection:text-brand-primary;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply tracking-[-0.04em] font-bold leading-[1.1];
+  }
+
+  p {
+    @apply leading-relaxed text-text-secondary;
   }
 }
 
 @layer components {
-  .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-border-subtle shadow-sm;
+  /* Enterprise Component Classes */
+  .section-container {
+    @apply py-[var(--spacing-section-mobile)] md:py-[var(--spacing-section)] px-6 md:px-12 max-w-7xl mx-auto;
+  }
+
+  .glass-premium {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-[0_8px_32px_0_rgba(0,0,0,0.03)];
   }
   
-  .glass-dark {
-    @apply bg-slate-900/90 backdrop-blur-xl border border-white/10;
+  .card-enterprise {
+    @apply bg-white border border-border-subtle rounded-3xl p-10 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-brand-primary/20 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] hover:-translate-y-1 relative overflow-hidden;
   }
 
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-text-primary to-text-secondary;
+  .card-enterprise-dark {
+    @apply bg-slate-900 border border-slate-800 rounded-3xl p-10 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-brand-primary/40 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.4)] hover:-translate-y-1 relative overflow-hidden text-white;
   }
 
-  .btn-primary {
-    @apply bg-brand-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-brand-primary/90 transition-all shadow-xl shadow-brand-primary/10 border border-white/10 flex items-center justify-center gap-2;
+  .glass-enterprise {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-sm rounded-3xl;
   }
 
-  .btn-secondary {
-    @apply text-text-secondary bg-white border border-border-subtle px-8 py-4 rounded-full font-bold text-lg hover:bg-bg-light transition-all shadow-sm flex items-center justify-center gap-2;
+  .btn-enterprise-primary {
+    @apply bg-text-primary text-white px-7 py-3.5 rounded-full font-medium text-base hover:bg-slate-800 transition-all duration-300 shadow-sm flex items-center justify-center gap-2 active:scale-95;
   }
 
-  .card-premium {
-    @apply bg-bg-surface border border-border-subtle rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-slate-200/40 transition-all duration-700;
+  .btn-enterprise-secondary {
+    @apply text-text-primary bg-white border border-border-strong px-7 py-3.5 rounded-full font-medium text-base hover:bg-bg-muted transition-all duration-300 flex items-center justify-center gap-2 active:scale-95;
+  }
+
+  .badge-enterprise {
+    @apply px-3 py-1 rounded-full text-[12px] font-bold tracking-wide uppercase bg-brand-light text-brand-primary border border-brand-primary/10 inline-flex items-center gap-1.5;
+  }
+
+  .input-enterprise {
+    @apply w-full bg-white border border-border-strong rounded-xl px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/5 transition-all duration-300;
+  }
+
+  .label-enterprise {
+    @apply block text-[12px] font-bold text-text-secondary uppercase tracking-widest mb-2;
+  }
+
+  .table-container {
+    @apply w-full overflow-x-auto border border-border-subtle rounded-2xl bg-white shadow-sm;
+  }
+
+  .table-header {
+    @apply bg-slate-50 border-b border-border-subtle px-6 py-4 text-[11px] font-bold text-text-muted uppercase tracking-widest text-left;
+  }
+
+  .table-cell {
+    @apply px-6 py-4 text-sm text-text-primary border-b border-border-subtle last:border-0;
+  }
+
+  .alert-enterprise {
+    @apply p-4 rounded-xl border flex gap-3 items-start;
+  }
+
+  .alert-info {
+    @apply bg-blue-50 border-blue-100 text-blue-700;
+  }
+
+  .alert-success {
+    @apply bg-emerald-50 border-emerald-100 text-emerald-700;
+  }
+
+  .alert-warning {
+    @apply bg-amber-50 border-amber-100 text-amber-700;
   }
 }
 
-@keyframes scan {
-  0% { transform: translateY(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(1000%); opacity: 0; }
+.text-stroke-primary {
+  -webkit-text-stroke: 1px var(--color-text-primary);
 }
 
-.animate-scan {
-  animation: scan 4s linear infinite;
+.text-balance {
+  text-wrap: balance;
 }
 
-.selection\:bg-blue-500\/30 *::selection {
-  background-color: rgba(37, 99, 235, 0.2);
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

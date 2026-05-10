@@ -10,7 +10,9 @@ import Challenges from './components/Challenges';
 import Security from './components/Security';
 import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
+import CTA from './components/CTA';
 import Footer from './components/Footer';
+import HumanImpact from './components/HumanImpact';
 import DesignSystem from './components/DesignSystem';
 
 function App() {
@@ -23,7 +25,7 @@ function App() {
   }, []);
 
   return (
-    <div className="simplydse-root min-h-screen bg-white text-text-primary selection:bg-brand-primary selection:text-white overflow-x-hidden">
+    <div className="simplydse-root min-h-screen bg-white text-text-primary selection:bg-brand-primary/10 selection:text-brand-primary overflow-x-hidden">
       <Navbar />
       
       {showDesignSystem ? (
@@ -44,6 +46,8 @@ function App() {
           </div>
 
           <Solutions />
+
+          <HumanImpact />
 
           {/* Section 4: Workflow (White) */}
           <Workflow />
@@ -68,6 +72,8 @@ function App() {
           <div className="bg-bg-light border-t border-border-subtle">
             <FAQ />
           </div>
+
+          <CTA />
         </main>
       )}
       
